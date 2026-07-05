@@ -58,3 +58,30 @@ Stage Summary:
 - ALL nice-to-have features verified (map, reviews, multi-services, deposit, stats)
 - Double-booking prevention confirmed (transactional + slot exclusion)
 - Zero runtime errors. App is production-ready for the demo scope.
+
+---
+Task ID: 10
+Agent: Main (Z.ai Code)
+Task: Transform into installable PWA, switch to FCFA currency, Cote d'Ivoire cities, real Leaflet map
+
+Work Log:
+- Installed leaflet + react-leaflet v5 (React 19 compatible) + @types/leaflet
+- Currency: replaced EUR Intl formatter with FCFA formatter ("3 000 FCFA" format)
+- Seed data: rewrote 8 providers across Cote d'Ivoire cities (Abidjan x2, Bouake, Yamoussoukro, San-Pedro, Korhogo, Daloa, Man) with real lat/lng and FCFA prices (3 000 - 50 000 FCFA). Updated client name (Aya Kouassi) and phone (+225)
+- Map: replaced SVG mockup with real Leaflet + OpenStreetMap. Created leaflet-map.tsx (dynamically imported, ssr:false) with custom div-icons per category, FitBounds, user-locate marker, popups. Tiles cached by SW for offline use
+- PWA: generated PNG icons (192/256/384/512 + maskable + apple-touch) with sharp. Created manifest.json (standalone, amber theme, shortcuts). Created sw.js (app-shell cache, network-first nav, stale-while-revalidate assets, cache-first map tiles, network-only API). Added sw-register.tsx + install-prompt.tsx (custom "Installer ReservoExpress" banner using beforeinstallprompt)
+- Layout: added manifest link, theme-color (#f59e0b), apple-touch-icon, appleWebApp meta, viewport cover for safe areas, lang="fr"
+- Fallback coords everywhere updated from Paris (48.8, 2.3) to Abidjan (5.36, -4.0083)
+
+Verification (Agent Browser):
+- Home: shows Abidjan/Yamoussoukro/Korhogo/Man + "10 000 FCFA", "5 000 FCFA", "3 000 FCFA"
+- Map: 10 OSM tiles loaded + 8 markers, clickable -> bottom sheet "Salon Eburnie, Rue des Jardins, Cocody, Abidjan", Leaflet attribution present
+- Booking flow end-to-end: provider -> date -> slot (09:00) -> confirm -> POST 201 -> detail shows "3 000 FCFA"
+- PWA: manifest + theme-color + apple-touch-icon in HTML, service worker registered at scope "/"
+- InstallPrompt banner appears ("Installer ReservoExpress" / "Installer" / "Fermer")
+- Lint clean, no runtime errors
+
+Stage Summary:
+- App is now an installable PWA (downloadable web app) with offline app-shell + cached map tiles
+- Currency is FCFA, locations are Cote d'Ivoire cities with real coordinates
+- Real interactive OpenStreetMap replaces the SVG mockup

@@ -65,8 +65,8 @@ export async function POST(req: NextRequest) {
       const address = String(body.address || "");
       const city = String(body.city || "");
       const description = String(body.description || "");
-      const lat = Number(body.lat ?? 48.8566);
-      const lng = Number(body.lng ?? 2.3522);
+      const lat = Number(body.lat ?? 5.36);   // Abidjan
+      const lng = Number(body.lng ?? -4.0083);
 
       if (!businessName || !address || !city) {
         // rollback user

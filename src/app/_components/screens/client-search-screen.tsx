@@ -79,8 +79,8 @@ export function ClientSearchScreen() {
         setUseLocation(true);
       },
       () => {
-        // Fallback: Paris center
-        setLocation({ lat: 48.8566, lng: 2.3522 });
+        // Fallback: Abidjan center
+        setLocation({ lat: 5.36, lng: -4.0083 });
         setUseLocation(true);
       }
     );

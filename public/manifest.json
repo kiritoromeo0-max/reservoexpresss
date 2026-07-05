@@ -1,0 +1,59 @@
+{
+  "name": "ReservoExpress - Prise de rendez-vous",
+  "short_name": "ReservoExpress",
+  "description": "Reservez un creneau chez un prestataire local en Cote d'Ivoire, en 3 taps.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f59e0b",
+  "theme_color": "#f59e0b",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["lifestyle", "productivity", "business"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Rechercher un prestataire",
+      "short_name": "Rechercher",
+      "url": "/?screen=search",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mes rendez-vous",
+      "short_name": "RDV",
+      "url": "/?screen=appointments",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

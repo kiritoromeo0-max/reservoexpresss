@@ -32,13 +32,13 @@ export function categoryLabel(cat: string): string {
 
 export { Star, MapPin, Clock };
 
+// Format a price in West African CFA franc (XOF / FCFA).
 export function formatPrice(p: number): string {
-  return new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: "EUR",
+  const n = new Intl.NumberFormat("fr-FR", {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(p);
+    maximumFractionDigits: 0,
+  }).format(Math.round(p));
+  return `${n} FCFA`;
 }
 
 export function formatDuration(min: number): string {

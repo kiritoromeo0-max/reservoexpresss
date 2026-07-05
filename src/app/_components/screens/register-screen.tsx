@@ -176,7 +176,7 @@ export function RegisterScreen({ onSwitch }: { onSwitch: () => void }) {
                     id="r-city"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    placeholder="Paris"
+                    placeholder="Abidjan"
                     required
                   />
                 </div>

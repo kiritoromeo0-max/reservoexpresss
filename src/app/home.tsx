@@ -8,6 +8,8 @@ import { PhoneFrame } from "./_components/phone-frame";
 import { ScreenRouter } from "./_components/screen-router";
 import { ToastBubble } from "./_components/toast-bubble";
 import { AuthGate } from "./_components/auth-gate";
+import { ServiceWorkerRegister } from "./_components/sw-register";
+import { InstallPrompt } from "./_components/install-prompt";
 
 export default function Home() {
   const user = useApp((s) => s.user);
@@ -71,6 +73,8 @@ export default function Home() {
       </div>
 
       <ToastBubble />
+      <InstallPrompt />
+      <ServiceWorkerRegister />
       <Toaster />
     </div>
   );
