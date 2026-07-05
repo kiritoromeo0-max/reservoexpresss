@@ -7,7 +7,6 @@ import { useApp } from "@/lib/store";
 import type { ProviderPublic } from "@/lib/types";
 import { categoryIcon, categoryLabel, Stars, formatPrice } from "../ui-helpers";
 import { MapPin, Locate, X } from "lucide-react";
-import "leaflet/dist/leaflet.css";
 import { Button } from "@/components/ui/button";
 
 // Leaflet needs `window`, so the map component is loaded client-side only.
