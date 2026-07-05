@@ -48,14 +48,15 @@ export function ProviderStatsScreen() {
   const maxCount = Math.max(...stats.popularServices.map((s) => s.count), 1);
 
   return (
-    <div className="flex-1 overflow-y-auto slim-scrollbar px-4 py-4 pb-6">
-      <h1 className="text-xl font-bold mb-1">Statistiques</h1>
+    <div className="flex-1 overflow-y-auto slim-scrollbar px-4 md:px-8 py-4 pb-6">
+      <div className="mx-auto max-w-5xl">
+      <h1 className="text-xl md:text-2xl font-bold mb-1">Statistiques</h1>
       <p className="text-xs text-muted-foreground mb-4">
         Apercu de votre activite
       </p>
 
       {/* KPI grid */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
         <Kpi
           icon={<TrendingUp className="size-4" />}
           value={`${stats.occupancyRate}%`}
@@ -164,6 +165,7 @@ export function ProviderStatsScreen() {
             notation et attirer de nouveaux clients.
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

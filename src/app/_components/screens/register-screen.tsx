@@ -66,7 +66,7 @@ export function RegisterScreen({ onSwitch }: { onSwitch: () => void }) {
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto slim-scrollbar">
-      <div className="px-6 py-6">
+      <div className="px-6 py-6 mx-auto w-full max-w-md">
         {/* Brand */}
         <div className="flex flex-col items-center text-center mb-6">
           <div className="size-12 rounded-2xl bg-primary text-primary-foreground grid place-items-center mb-3">

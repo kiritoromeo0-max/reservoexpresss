@@ -18,6 +18,7 @@ import {
   CalendarX2,
   ChevronRight,
   Users,
+  CalendarCheck,
 } from "lucide-react";
 import { useNotificationPolling } from "@/lib/use-notification-polling";
 import { cn } from "@/lib/utils";
@@ -51,24 +52,31 @@ export function ProviderDashboardScreen() {
   return (
     <div className="flex-1 overflow-y-auto slim-scrollbar pb-6">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground px-5 pt-6 pb-6 rounded-b-3xl">
-        <div className="flex items-center gap-3 mb-4">
-          <Avatar name={user.name} color={user.avatarColor} size={44} />
-          <div className="flex-1">
-            <p className="text-xs opacity-80">Espace prestataire</p>
-            <p className="font-semibold leading-tight">
-              {user.provider?.businessName ?? user.name}
-            </p>
+      <div className="bg-primary text-primary-foreground rounded-b-3xl md:rounded-none">
+        <div className="mx-auto max-w-5xl px-5 md:px-8 pt-6 pb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Avatar name={user.name} color={user.avatarColor} size={44} />
+            <div className="flex-1">
+              <p className="text-xs opacity-80">Espace prestataire</p>
+              <p className="font-semibold leading-tight">
+                {user.provider?.businessName ?? user.name}
+              </p>
+            </div>
+            <div className="hidden md:flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+              <CalendarCheck className="size-4" />
+              <span className="text-sm font-semibold">ReservoExpress</span>
+            </div>
           </div>
+          <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+            Tableau de bord
+          </h2>
+          <p className="text-sm md:text-base opacity-90 capitalize">{todayLabel}</p>
         </div>
-        <h2 className="text-xl font-bold leading-tight">
-          Tableau de bord
-        </h2>
-        <p className="text-sm opacity-90 capitalize">{todayLabel}</p>
       </div>
 
+      <div className="mx-auto max-w-5xl px-4 md:px-8">
       {/* Stat cards */}
-      <div className="px-4 -mt-4 grid grid-cols-3 gap-2">
+      <div className="-mt-4 grid grid-cols-3 gap-2 md:gap-3">
         <StatCard
           icon={<CalendarDays className="size-4" />}
           value={loading ? "..." : String(data?.counts.today ?? 0)}
@@ -90,9 +98,9 @@ export function ProviderDashboardScreen() {
       </div>
 
       {/* Today's appointments */}
-      <div className="px-4 mt-5">
+      <div className="mt-6">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold flex items-center gap-2">
+          <h3 className="font-semibold text-lg flex items-center gap-2">
             <Clock className="size-4 text-primary" /> RDV du jour
           </h3>
           <button
@@ -103,7 +111,7 @@ export function ProviderDashboardScreen() {
           </button>
         </div>
         {loading ? (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {[0, 1].map((i) => (
               <div key={i} className="h-16 rounded-xl bg-muted animate-pulse" />
             ))}
@@ -115,7 +123,7 @@ export function ProviderDashboardScreen() {
             <p className="text-xs mt-0.5">Profitez-en pour faire une pause !</p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {data.today.map((a) => (
               <AppointmentCard
                 key={a.id}
@@ -123,8 +131,6 @@ export function ProviderDashboardScreen() {
                 showClient
                 onClick={() => {
                   useApp.getState().setSelectedAppointmentId(a.id);
-                  // open in a simple dialog-like nav (we reuse client detail screen logic via state)
-                  // For provider, we show a lighter inline view: navigate to appointments list
                   resetTo("provider-appointments");
                 }}
               />
@@ -134,8 +140,8 @@ export function ProviderDashboardScreen() {
       </div>
 
       {/* Week preview */}
-      <div className="px-4 mt-5">
-        <h3 className="font-semibold flex items-center gap-2 mb-2">
+      <div className="mt-6">
+        <h3 className="font-semibold text-lg flex items-center gap-2 mb-2">
           <CalendarDays className="size-4 text-primary" /> Cette semaine
         </h3>
         {loading ? (
@@ -145,9 +151,12 @@ export function ProviderDashboardScreen() {
             Aucun RDV cette semaine
           </div>
         ) : (
-          <div className="rounded-xl border border-border bg-card divide-y divide-border">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {groupByDay(data.week).map((group) => (
-              <div key={group.day} className="px-3 py-2 flex items-center justify-between">
+              <div
+                key={group.day}
+                className="rounded-xl border border-border bg-card px-3 py-2 flex items-center justify-between"
+              >
                 <div>
                   <p className="text-sm font-medium">{group.day}</p>
                   <p className="text-xs text-muted-foreground">
@@ -164,7 +173,7 @@ export function ProviderDashboardScreen() {
       </div>
 
       {/* Quick actions */}
-      <div className="px-4 mt-5 grid grid-cols-2 gap-2">
+      <div className="mt-6 grid grid-cols-2 gap-2">
         <button
           onClick={() => resetTo("provider-unavailabilities")}
           className="rounded-xl border border-border bg-card p-3 flex flex-col items-center gap-1.5 hover:shadow-sm transition-shadow"
@@ -179,6 +188,7 @@ export function ProviderDashboardScreen() {
           <TrendingUp className="size-5 text-primary" />
           <span className="text-xs font-medium">Statistiques</span>
         </button>
+      </div>
       </div>
     </div>
   );

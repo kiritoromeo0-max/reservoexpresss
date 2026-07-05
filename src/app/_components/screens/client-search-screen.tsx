@@ -96,8 +96,8 @@ export function ClientSearchScreen() {
   return (
     <div className="flex-1 flex flex-col">
       {/* Search bar */}
-      <div className="px-4 pt-3 pb-2 bg-card border-b border-border space-y-2">
-        <div className="flex items-center gap-2">
+      <div className="px-4 md:px-8 pt-3 pb-2 bg-card border-b border-border space-y-2">
+        <div className="mx-auto max-w-5xl flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <Input
@@ -227,13 +227,14 @@ export function ClientSearchScreen() {
       </div>
 
       {/* Results */}
-      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 py-3">
+      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 md:px-8 py-3">
+        <div className="mx-auto max-w-5xl">
         <p className="text-xs text-muted-foreground mb-2">
           {loading ? "Recherche..." : `${providers.length} prestataire(s) trouve(s)`}
           {activeCat && ` · ${activeCat.label}`}
         </p>
         {loading ? (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {[0, 1, 2, 3].map((i) => (
               <div key={i} className="h-24 rounded-xl bg-muted animate-pulse" />
             ))}
@@ -245,7 +246,7 @@ export function ClientSearchScreen() {
             <p className="text-xs mt-1">Essayez d'autres criteres.</p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
             {providers.map((p) => {
               const Icon = categoryIcon(p.category);
               return (
@@ -315,6 +316,7 @@ export function ClientSearchScreen() {
             })}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

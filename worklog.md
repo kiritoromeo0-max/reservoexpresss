@@ -85,3 +85,32 @@ Stage Summary:
 - App is now an installable PWA (downloadable web app) with offline app-shell + cached map tiles
 - Currency is FCFA, locations are Cote d'Ivoire cities with real coordinates
 - Real interactive OpenStreetMap replaces the SVG mockup
+
+---
+Task ID: 11
+Agent: Main (Z.ai Code)
+Task: Make app fully responsive (remove phone frame, adapt to all screens)
+
+Work Log:
+- Removed PhoneFrame component entirely; app now fills full viewport on all devices
+- home.tsx: full-screen flex layout, no phone mockup
+- screen-router.tsx: full-height layout; map screen gets dedicated full-height branch (no scroll container) so Leaflet gets real height
+- bottom-nav.tsx: split into mobile (fixed full-width bar) + desktop (floating centered pill with labels). Mobile hidden on md+, desktop hidden below md
+- screen-header.tsx: max-w-5xl centered container, brand badge shown on desktop
+- All screens wrapped in max-w-5xl (lists/grids) or max-w-2xl/3xl (detail/profile) centered containers
+- Responsive grids: home categories 3->6 cols, providers/notifications/appointments/unavailabilities 1->2 cols, stats KPIs 2->4 cols
+- Responsive paddings: px-4 on mobile -> px-8 on desktop
+- Auth screens: max-w-md centered
+- Map: fixed height h-[calc(100dvh-3.5rem)], MapContainer uses absolute inset-0 so it fills its relative parent reliably
+- Deleted unused phone-frame.tsx
+
+Verification (Agent Browser):
+- Mobile 420x880: home, booking, map (420x823, 10 tiles) all render correctly, fixed bottom nav present
+- Desktop 1280x800: home (6-col categories, 2-col providers), provider dashboard (floating pill nav 534px centered), provider stats (4-col KPIs), provider appointments (2-col grid), map (1280x743, 18 tiles, 8 markers) all work
+- Bottom nav: mobile=full-width fixed bar, desktop=floating centered pill (only one visible per breakpoint)
+- Lint clean, no runtime errors
+
+Stage Summary:
+- App is now a true responsive web app: fills the screen on mobile, tablet, and desktop
+- No more phone mockup — adapts to all screen sizes with multi-column grids on wider screens
+- Real interactive Leaflet map works full-screen on both mobile and desktop

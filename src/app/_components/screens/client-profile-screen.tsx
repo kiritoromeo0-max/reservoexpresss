@@ -40,8 +40,9 @@ export function ClientProfileScreen() {
 
   return (
     <div className="flex-1 overflow-y-auto slim-scrollbar pb-6">
+      <div className="mx-auto max-w-3xl">
       {/* Profile header */}
-      <div className="bg-primary text-primary-foreground px-5 pt-6 pb-8 rounded-b-3xl">
+      <div className="bg-primary text-primary-foreground px-5 pt-6 pb-8 rounded-b-3xl md:rounded-none">
         <div className="flex flex-col items-center text-center">
           <Avatar name={user.name} color={user.avatarColor} size={72} />
           <h2 className="text-lg font-bold mt-3">{user.name}</h2>
@@ -52,7 +53,7 @@ export function ClientProfileScreen() {
       </div>
 
       {/* Info card */}
-      <div className="px-4 -mt-4">
+      <div className="px-4 md:px-0 -mt-4">
         <div className="rounded-xl border border-border bg-card divide-y divide-border shadow-sm">
           <InfoRow
             icon={<Mail className="size-4 text-primary" />}
@@ -68,7 +69,7 @@ export function ClientProfileScreen() {
       </div>
 
       {/* Menu */}
-      <div className="px-4 mt-4 space-y-3">
+      <div className="px-4 md:px-0 mt-4 space-y-3">
         <div className="rounded-xl border border-border bg-card divide-y divide-border overflow-hidden">
           <MenuItem
             icon={<CalendarDays className="size-4" />}
@@ -115,6 +116,7 @@ export function ClientProfileScreen() {
         <p className="text-center text-xs text-muted-foreground pt-2">
           ReservoExpress v1.0 · Projet pedagogique
         </p>
+      </div>
       </div>
     </div>
   );

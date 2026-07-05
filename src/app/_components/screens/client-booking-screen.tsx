@@ -171,7 +171,8 @@ export function ClientBookingScreen() {
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 py-4">
+      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 md:px-8 py-4">
+        <div className="mx-auto max-w-2xl">
         {/* Step 1: Date */}
         {step === 1 && (
           <div className="space-y-4">
@@ -365,6 +366,7 @@ export function ClientBookingScreen() {
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

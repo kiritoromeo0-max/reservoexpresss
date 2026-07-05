@@ -46,16 +46,19 @@ export function ClientNotificationsScreen() {
 
   return (
     <div className="flex-1 flex flex-col">
-      <div className="px-4 pt-4 pb-2 flex items-center justify-between">
-        <h1 className="text-xl font-bold">Notifications</h1>
+      <div className="px-4 md:px-8 pt-4 pb-2 flex items-center justify-between">
+        <div className="mx-auto max-w-5xl w-full flex items-center justify-between">
+        <h1 className="text-xl md:text-2xl font-bold">Notifications</h1>
         {items.some((n) => !n.read) && (
           <Button variant="ghost" size="sm" onClick={markAll}>
             Tout lire
           </Button>
         )}
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 pb-6">
+      <div className="flex-1 overflow-y-auto slim-scrollbar px-4 md:px-8 pb-6">
+        <div className="mx-auto max-w-5xl">
         {loading ? (
           <div className="space-y-2">
             {[0, 1, 2].map((i) => (
@@ -68,7 +71,7 @@ export function ClientNotificationsScreen() {
             <p className="text-sm">Aucune notification</p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {items.map((n) => {
               const Icon = iconForType(n.type);
               return (
@@ -104,6 +107,7 @@ export function ClientNotificationsScreen() {
             })}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

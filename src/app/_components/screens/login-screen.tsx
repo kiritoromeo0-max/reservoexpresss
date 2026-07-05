@@ -45,7 +45,7 @@ export function LoginScreen({ onSwitch }: { onSwitch: () => void }) {
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto slim-scrollbar">
-      <div className="flex-1 flex flex-col justify-center px-6 py-8">
+      <div className="flex-1 flex flex-col justify-center px-6 py-8 mx-auto w-full max-w-md">
         {/* Brand */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="size-16 rounded-2xl bg-primary text-primary-foreground grid place-items-center mb-4 shadow-lg shadow-primary/30">

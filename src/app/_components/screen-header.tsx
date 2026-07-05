@@ -1,7 +1,7 @@
 "use client";
 
 import { useApp } from "@/lib/store";
-import { ChevronLeft, Bell } from "lucide-react";
+import { ChevronLeft, Bell, CalendarCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TITLES: Record<string, string> = {
@@ -20,6 +20,7 @@ const TITLES: Record<string, string> = {
   "provider-profile": "Mon profil",
 };
 
+// Screens that have their own custom header (home / dashboard)
 const HIDE_HEADER = new Set([
   "client-home",
   "provider-dashboard",
@@ -42,8 +43,8 @@ export function ScreenHeader() {
   const notifTarget = user?.role === "PROVIDER" ? "provider-notifications" : "client-notifications";
 
   return (
-    <header className="shrink-0 sticky top-0 z-20 bg-card/95 backdrop-blur border-b border-border">
-      <div className="h-14 px-2 flex items-center gap-1">
+    <header className="shrink-0 sticky top-0 z-30 bg-card/95 backdrop-blur border-b border-border">
+      <div className="mx-auto max-w-5xl h-14 px-2 md:px-6 flex items-center gap-1">
         <button
           onClick={() => (canBack ? back() : resetTo(user?.role === "PROVIDER" ? "provider-dashboard" : "client-home"))}
           className={cn(
@@ -54,9 +55,16 @@ export function ScreenHeader() {
         >
           <ChevronLeft className="size-6" />
         </button>
-        <h1 className="flex-1 text-center font-semibold text-base truncate px-1">
-          {title}
-        </h1>
+        {/* Brand on desktop, title centered */}
+        <div className="flex-1 flex items-center justify-center gap-2 md:gap-3">
+          <div className="hidden md:flex items-center gap-1.5 text-primary">
+            <CalendarCheck className="size-4" />
+            <span className="font-semibold text-sm">ReservoExpress</span>
+          </div>
+          <h1 className="font-semibold text-base md:text-lg truncate px-1">
+            {title}
+          </h1>
+        </div>
         <button
           onClick={() => resetTo(notifTarget as never)}
           className="size-9 grid place-items-center rounded-full hover:bg-accent transition-colors relative"

@@ -58,9 +58,9 @@ export function ClientMapScreen() {
   }
 
   return (
-    <div className="flex-1 flex flex-col relative">
+    <div className="flex-1 flex flex-col relative h-[calc(100dvh-3.5rem)]">
       {/* Map canvas */}
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 relative overflow-hidden min-h-0">
         <LeafletMap
           providers={providers}
           selectedId={selected?.id ?? null}

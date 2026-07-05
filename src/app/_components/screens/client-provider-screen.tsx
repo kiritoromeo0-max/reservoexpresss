@@ -84,9 +84,8 @@ export function ClientProviderScreen() {
   return (
     <div className="flex-1 flex flex-col">
       {/* Photo carousel */}
-      <div className="relative aspect-[16/10] bg-muted shrink-0 overflow-hidden">
+      <div className="relative aspect-[16/10] md:aspect-[21/9] bg-muted shrink-0 overflow-hidden md:max-h-[420px]">
         {provider.photos[photoIdx] ? (
-           
           <img
             src={provider.photos[photoIdx]}
             alt={provider.businessName}
@@ -120,8 +119,8 @@ export function ClientProviderScreen() {
       </div>
 
       {/* Header info */}
-      <div className="px-5 pt-4 pb-3 border-b border-border">
-        <div className="flex items-start justify-between gap-2">
+      <div className="px-5 md:px-8 pt-4 pb-3 border-b border-border">
+        <div className="mx-auto max-w-5xl flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <span className="text-[11px] uppercase tracking-wide text-primary font-semibold">
               {categoryLabel(provider.category)}
@@ -148,31 +147,34 @@ export function ClientProviderScreen() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-border shrink-0">
-        {([
-          ["services", "Services"],
-          ["infos", "Infos & Horaires"],
-          ["avis", `Avis (${reviews.length})`],
-        ] as const).map(([k, label]) => (
-          <button
-            key={k}
-            onClick={() => setTab(k)}
-            className={cn(
-              "flex-1 py-2.5 text-sm font-medium relative",
-              tab === k ? "text-primary" : "text-muted-foreground"
-            )}
-          >
-            {label}
-            {tab === k && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary" />
-            )}
-          </button>
-        ))}
+      <div className="border-b border-border shrink-0">
+        <div className="mx-auto max-w-5xl flex">
+          {([
+            ["services", "Services"],
+            ["infos", "Infos & Horaires"],
+            ["avis", `Avis (${reviews.length})`],
+          ] as const).map(([k, label]) => (
+            <button
+              key={k}
+              onClick={() => setTab(k)}
+              className={cn(
+                "flex-1 md:flex-none md:px-8 py-2.5 text-sm font-medium relative",
+                tab === k ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              {label}
+              {tab === k && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto slim-scrollbar px-5 py-4">
+      <div className="flex-1 overflow-y-auto slim-scrollbar px-5 md:px-8 py-4">
+        <div className="mx-auto max-w-5xl">
         {tab === "services" && (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
             {provider.services.map((s) => (
               <div
                 key={s.id}
@@ -299,6 +301,7 @@ export function ClientProviderScreen() {
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

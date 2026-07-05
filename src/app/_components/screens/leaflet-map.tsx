@@ -103,7 +103,7 @@ export default function LeafletMap({
       center={ABIDJAN}
       zoom={6}
       scrollWheelZoom={false}
-      className="w-full h-full"
+      className="absolute inset-0 w-full h-full"
       style={{ background: "#aadaff" }}
     >
       <TileLayer

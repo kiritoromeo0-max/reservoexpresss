@@ -47,15 +47,23 @@ export function ScreenRouter() {
   const tabScreens = isClient ? CLIENT_TAB_SCREENS : PROVIDER_TAB_SCREENS;
   // Show bottom nav only on tab-root screens
   const showBottomNav = (tabScreens as readonly string[]).includes(screen);
+  // Map screen uses the full viewport height (no scroll container, no padding)
+  const isMapScreen = screen === "client-map";
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex-1 overflow-y-auto slim-scrollbar flex flex-col">
-        <ScreenHeader />
-        <div key={screen} className="flex-1 flex flex-col screen-enter">
+    <div className="flex-1 flex flex-col min-h-0 h-[100dvh]">
+      <ScreenHeader />
+      {isMapScreen ? (
+        <div key={screen} className="flex-1 flex flex-col min-h-0 screen-enter">
           {renderScreen(screen)}
         </div>
-      </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto slim-scrollbar pb-24 md:pb-8">
+          <div key={screen} className="flex-1 flex flex-col screen-enter">
+            {renderScreen(screen)}
+          </div>
+        </div>
+      )}
       {showBottomNav && <BottomNav />}
     </div>
   );

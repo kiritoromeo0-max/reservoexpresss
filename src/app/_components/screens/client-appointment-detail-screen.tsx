@@ -130,6 +130,7 @@ export function ClientAppointmentDetailScreen() {
 
   return (
     <div className="flex-1 overflow-y-auto slim-scrollbar pb-6">
+      <div className="mx-auto max-w-2xl">
       {/* Status banner */}
       <div
         className={cn(
@@ -338,6 +339,7 @@ export function ClientAppointmentDetailScreen() {
         >
           Retour a la liste
         </Button>
+      </div>
       </div>
     </div>
   );

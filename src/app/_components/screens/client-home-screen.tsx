@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-import { useApp, homeScreenForRole } from "@/lib/store";
+import { useApp } from "@/lib/store";
 import type { ProviderPublic } from "@/lib/types";
 import { CATEGORIES, Stars, categoryIcon, formatPrice } from "../ui-helpers";
 import { Avatar } from "../ui-helpers";
 import { useNotificationPolling } from "@/lib/use-notification-polling";
 import { Search, MapPin, CalendarCheck, ChevronRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
 
 export function ClientHomeScreen() {
   const user = useApp((s) => s.user)!;
@@ -16,7 +15,6 @@ export function ClientHomeScreen() {
   const setSelectedProviderId = useApp((s) => s.setSelectedProviderId);
   const [featured, setFeatured] = useState<ProviderPublic[]>([]);
   const [loading, setLoading] = useState(true);
-  const [q, setQ] = useState("");
 
   useNotificationPolling();
 
@@ -24,7 +22,7 @@ export function ClientHomeScreen() {
     (async () => {
       try {
         const { providers } = await api.listProviders({ sort: "rating" });
-        setFeatured(providers.slice(0, 5));
+        setFeatured(providers);
       } finally {
         setLoading(false);
       }
@@ -38,7 +36,6 @@ export function ClientHomeScreen() {
 
   function searchCategory(cat: string) {
     navigate("client-search");
-    // pass via a quick custom event so the search screen picks it up
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent("rx-search-category", { detail: cat }));
     }, 50);
@@ -47,53 +44,61 @@ export function ClientHomeScreen() {
   return (
     <div className="flex-1 flex flex-col">
       {/* Hero header */}
-      <div className="bg-primary text-primary-foreground px-5 pt-6 pb-8 rounded-b-3xl">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
-            <Avatar name={user.name} color={user.avatarColor} size={40} />
-            <div>
-              <p className="text-xs opacity-80">Bonjour</p>
-              <p className="font-semibold leading-tight">{user.name.split(" ")[0]}</p>
+      <div className="bg-primary text-primary-foreground rounded-b-3xl md:rounded-none">
+        <div className="mx-auto max-w-5xl px-5 md:px-8 pt-6 pb-8 md:pb-10">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <Avatar name={user.name} color={user.avatarColor} size={40} />
+              <div>
+                <p className="text-xs opacity-80">Bonjour</p>
+                <p className="font-semibold leading-tight">{user.name.split(" ")[0]}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+                <CalendarCheck className="size-4" />
+                <span className="text-sm font-semibold">ReservoExpress</span>
+              </div>
+              <button
+                onClick={() => navigate("client-notifications")}
+                className="size-10 rounded-full bg-white/15 grid place-items-center"
+                aria-label="Notifications"
+              >
+                <CalendarCheck className="size-5" />
+              </button>
             </div>
           </div>
+          <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-1">
+            Reservez un creneau
+          </h2>
+          <p className="text-sm md:text-base opacity-90 mb-5">
+            Chez un prestataire local en Cote d'Ivoire, en 3 taps.
+          </p>
+          {/* Search bar */}
           <button
-            onClick={() => navigate("client-notifications")}
-            className="size-10 rounded-full bg-white/15 grid place-items-center"
-            aria-label="Notifications"
+            onClick={() => navigate("client-search")}
+            className="w-full bg-white text-foreground rounded-xl flex items-center gap-2 px-4 py-3.5 shadow-sm hover:shadow-md transition-shadow"
           >
-            <CalendarCheck className="size-5" />
+            <Search className="size-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
+              Coiffeur, medecin, garage...
+            </span>
           </button>
         </div>
-        <h2 className="text-xl font-bold leading-tight mb-1">
-          Reservez un creneau
-        </h2>
-        <p className="text-sm opacity-90 mb-4">
-          Chez un prestataire local, en 3 taps.
-        </p>
-        {/* Search bar */}
-        <button
-          onClick={() => navigate("client-search")}
-          className="w-full bg-white text-foreground rounded-xl flex items-center gap-2 px-4 py-3 shadow-sm"
-        >
-          <Search className="size-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">
-            Coiffeur, medecin, garage...
-          </span>
-        </button>
       </div>
 
-      <div className="px-5 py-5 space-y-6">
+      <div className="mx-auto max-w-5xl w-full px-5 md:px-8 py-5 md:py-8 space-y-8">
         {/* Categories */}
         <section>
-          <h3 className="font-semibold mb-3">Categories</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <h3 className="font-semibold text-lg mb-3">Categories</h3>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
             {CATEGORIES.map((c) => {
               const Icon = c.icon;
               return (
                 <button
                   key={c.id}
                   onClick={() => searchCategory(c.id)}
-                  className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-3 hover:bg-accent transition-colors"
+                  className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-3 hover:bg-accent hover:shadow-sm transition-all"
                 >
                   <div className="size-10 rounded-xl bg-primary/10 text-primary grid place-items-center">
                     <Icon className="size-5" />
@@ -114,9 +119,9 @@ export function ClientHomeScreen() {
             <MapPin className="size-5 text-primary" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-sm">Voir la carte</p>
+            <p className="font-semibold text-sm">Voir la carte interactive</p>
             <p className="text-xs text-muted-foreground">
-              Trouvez un prestataire pres de chez vous
+              Trouvez un prestataire pres de chez vous en Cote d'Ivoire
             </p>
           </div>
           <ChevronRight className="size-5 text-muted-foreground" />
@@ -125,7 +130,7 @@ export function ClientHomeScreen() {
         {/* Featured */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold">Top prestataires</h3>
+            <h3 className="font-semibold text-lg">Top prestataires</h3>
             <button
               onClick={() => navigate("client-search")}
               className="text-xs text-primary font-medium"
@@ -134,9 +139,9 @@ export function ClientHomeScreen() {
             </button>
           </div>
           {loading ? (
-            <div className="space-y-2">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="h-20 rounded-xl bg-muted animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-24 rounded-xl bg-muted animate-pulse" />
               ))}
             </div>
           ) : featured.length === 0 ? (
@@ -144,7 +149,7 @@ export function ClientHomeScreen() {
               Aucun prestataire pour le moment
             </p>
           ) : (
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
               {featured.map((p) => {
                 const Icon = categoryIcon(p.category);
                 return (
@@ -155,7 +160,6 @@ export function ClientHomeScreen() {
                   >
                     <div className="size-12 rounded-xl bg-primary/10 text-primary grid place-items-center shrink-0 overflow-hidden">
                       {p.photos[0] ? (
-                         
                         <img
                           src={p.photos[0]}
                           alt={p.businessName}
@@ -185,7 +189,7 @@ export function ClientHomeScreen() {
                       <div className="text-right shrink-0">
                         <p className="text-xs text-muted-foreground">des</p>
                         <p className="text-sm font-semibold text-primary">
-                          {formatPrice(p.services[0].price)}
+                          {formatPrice(Math.min(...p.services.map((s) => s.price)))}
                         </p>
                       </div>
                     )}
